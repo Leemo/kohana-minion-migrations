@@ -45,10 +45,26 @@ class Kohana_Migrations_Helper {
 		$config = Kohana::$config->load('migrations')
 			->as_array();
 
-		$applied_migrations = DB::select('id', 'filename')
-			->from($config['table'])
-			->execute()
-			->as_array('id', 'filename');
+		try
+		{
+			$applied_migrations = DB::select('id', 'filename')
+				->from($config['table'])
+				->execute()
+				->as_array('id', 'filename');
+		}
+		catch (Kohana_Database_Exception $e)
+		{
+			$error = $e->getMessage();
+
+			if (stristr($error, 'migrations') AND stristr($error, 'doesn\'t exist'))
+			{
+				$applied_migrations = array();
+			}
+			else
+			{
+				throw new Kohana_Database_Exception($error);
+			}
+		}
 
 		$files = Kohana::list_files($config['directory']);
 
@@ -237,7 +253,7 @@ class Kohana_Migrations_Helper {
 				}
 			}
 		}
-		
+
 		$result[] = $row;
 
 		return implode("\n", $result);
