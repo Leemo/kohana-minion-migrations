@@ -33,7 +33,7 @@ class Kohana_Task_Migrations_Install extends Minion_Task {
 
 		try
 		{
-			DB::query(NULL, $query);
+			DB::query(NULL, str_replace(':prefix_', $table_prefix, $query));
 		}
 		catch (Exception $e)
 		{
