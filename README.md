@@ -19,6 +19,24 @@ Don't use trailing slashes!
 __table__ - table, that will store information about applied migrations.
 See SQL-file in the root of this repo. And dont't forget about prefixes.
 
+## Install/uninstall migrations service
+
+First, in the database you want to create a migration table. I will show how this 
+is done on the example of MySQL:
+
+```
+$ php5 index.php --task=migrations:install
+```
+
+Will be automatically applied sql-instructions from `schemas/migrations/<sql_type>/install.sql`.
+Where the `sql_type` parameter - type of your current connection.
+
+Similarly, uninstalling:
+
+```
+$ php5 index.php --task=migrations:uninstall
+```
+
 ## Create a migration
 
 ```

@@ -1,6 +1,4 @@
-/* Don't forget about prefixes */
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `:prefix_migrations` (
   `id` int(11) UNSIGNED NOT NULL,
   `date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `filename` varchar(255) NOT NULL,
